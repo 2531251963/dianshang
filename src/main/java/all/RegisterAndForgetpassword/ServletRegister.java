@@ -22,7 +22,7 @@ public class ServletRegister {
             //return "账号已存在";
             map.put("msg","账号已存在");
         }else {
-            //TODO
+
             if (jedis.exists("c"+phonenumber)){
                 // return "验证码已发送";
                 map.put("msg","验证码已发送");
@@ -63,9 +63,9 @@ public class ServletRegister {
             if(jedis.get("c"+phonenumber)==code0){
                 boolean b = false;
 
-                Register myPOJO = new Register();
+                Register register = new Register();
 
-                b = myPOJO.userregister(phonenumber,password);
+                b = register .userregister(phonenumber,password);
 
                 jedis.hset("phonenumber",phonenumber,"");
 

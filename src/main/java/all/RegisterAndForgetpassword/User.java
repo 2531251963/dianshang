@@ -1,33 +1,33 @@
 package all.RegisterAndForgetpassword;
 
 public class User {
-    private int UserId;
+    private int userid;
 
-    private String PhoneNumber;
+    private String phonenumber;
 
-    private String Password;
+    private String password;
 
-    public int getUserId() {
-        return UserId;
+    public int getUserid() {
+        return userid;
     }
 
-    public void setUserId(int userId) {
-        UserId = userId;
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 
-    public String getPhoneNumber() {
-        return PhoneNumber;
+    public String getPhonenumber() {
+        return phonenumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        PhoneNumber = phoneNumber;
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 }

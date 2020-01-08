@@ -29,15 +29,15 @@ public class ForgetPassword {
                 if(jedis.get("cc"+phonenumber)==code0){
                     boolean b = false;
 
-                    Register myPOJO = new Register();
+                    Register register  = new Register();
 
-                    b = myPOJO.userregister(phonenumber,password);
+                    b = register .userregister(phonenumber,password);
 
 
                 }
                 else{
                    // return验证码错误;
-                    res.put("msg","验证码已发送");
+                    res.put("msg","验证码错误");
                 }
             } else {
                 jedis.setex("cc" + phonenumber, 60,SendCodeUtil.sendCode(phonenumber));  //60后验证码失效
