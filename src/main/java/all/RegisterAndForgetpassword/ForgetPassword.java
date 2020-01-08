@@ -4,6 +4,7 @@ import all.util.RedisUtil;
 import all.util.SendCodeUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.ibatis.annotations.Update;
 import redis.clients.jedis.Jedis;
 
 
@@ -27,13 +28,10 @@ public class ForgetPassword {
             if (jedis.exists("cc" + phonenumber)) {
                 // return "验证码已发送";
                 if(jedis.get("cc"+phonenumber)==code0){
-                    boolean b = false;
+
 
                     Register register  = new Register();
-
-                    b = register .userregister(phonenumber,password);
-
-
+                    register.userupdate(phonenumber,password);
                 }
                 else{
                    // return验证码错误;

@@ -43,5 +43,41 @@ public class Register {
         else {
             return false;}
     }
+    public boolean userupdate(String phonenumber, String password){
+
+        boolean c = false;
+
+        String sql = "select * from  where phonenumber='"+ phonenumber +"'";
+
+
+        try{
+
+            Connection conn = JdbcUtil.getConnection();
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+
+            if(!rs.next()){
+
+                sql = "update user set user.password= '"+password+"'";
+
+                stm.execute(sql);
+                c = true;
+            }
+
+            rs.close();
+            stm.close();
+            conn.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+
+        if(c)
+        {
+            return true;
+        }
+        else {
+            return false;}
+    }
 
 }
