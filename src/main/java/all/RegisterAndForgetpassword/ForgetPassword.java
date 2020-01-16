@@ -11,6 +11,9 @@ import redis.clients.jedis.Jedis;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author forget
+ */
 public class ForgetPassword {
     public String forget(String data){
 
@@ -27,9 +30,7 @@ public class ForgetPassword {
         if (jedis.hexists("phonenumber" ,phonenumber)) {
             if (jedis.exists("cc" + phonenumber)) {
                 // return "验证码已发送";
-                if(jedis.get("cc"+phonenumber)==code0){
-
-
+                if(jedis.get("cc"+phonenumber)==code0) {
                     Register register  = new Register();
                     register.userupdate(phonenumber,password);
                 }
@@ -38,7 +39,9 @@ public class ForgetPassword {
                     res.put("msg","验证码错误");
                 }
             } else {
-                jedis.setex("cc" + phonenumber, 60,SendCodeUtil.sendCode(phonenumber));  //60后验证码失效
+
+                jedis.setex("cc" + phonenumber, 60,SendCodeUtil.sendCode(phonenumber));
+
             }
 
         } else {
