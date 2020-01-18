@@ -23,7 +23,7 @@ public class Register {
             ResultSet rs = stm.executeQuery(sql);
 
             if(!rs.next()){
-                sql = "insert into User(userid,phoneNumber,password) values('"+ SnowFlakeUtil.getId() +"','"+phonenumber+"','"+password+"')";
+                sql = "insert into user(userid,phoneNumber,password) values('"+ SnowFlakeUtil.getId() +"','"+phonenumber+"','"+password+"')";
                 stm.execute(sql);
                 b = true;
             }
@@ -58,7 +58,7 @@ public class Register {
 
             if(!rs.next()){
 
-                sql = "update user set user.password= '"+password+"'";
+                sql = "update user set user.password= '"+password+"' WHERE dianshang.user.phonenumber='"+phonenumber+"'";
 
                 stm.execute(sql);
                 c = true;
