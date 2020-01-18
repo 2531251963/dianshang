@@ -56,7 +56,7 @@ public class Register {
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery(sql);
 
-            if(!rs.next()){
+            if(rs.next()){
 
                 sql = "update user set user.password= '"+password+"' WHERE dianshang.user.phonenumber='"+phonenumber+"'";
 
