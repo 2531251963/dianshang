@@ -61,11 +61,11 @@ public class ServletRegister {
         else{
 
             if(jedis.get("c"+phonenumber)==code0){
-                boolean b = false;
+
 
                 Register register = new Register();
+                register .userregister(phonenumber,password);
 
-                b = register .userregister(phonenumber,password);
 
                 jedis.hset("phonenumber",phonenumber,"");
 

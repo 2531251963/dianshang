@@ -9,25 +9,24 @@ import java.sql.Statement;
 
 public class Register {
 
-    public boolean userregister(String phonenumber, String password){
+    public void userregister(String phonenumber, String password){
 
-        boolean b = false;
 
+        //查看要添加的手机号是否存在
         String sql = "select * from  where phonenumber='"+ phonenumber +"'";
 
 
         try{
-
             Connection conn = JdbcUtil.getConnection();
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery(sql);
-
+            //若手机号不存在
             if(!rs.next()){
+                //添加用户信息
                 sql = "insert into user(userid,phoneNumber,password) values('"+ SnowFlakeUtil.getId() +"','"+phonenumber+"','"+password+"')";
                 stm.execute(sql);
-                b = true;
-            }
 
+            }
             rs.close();
             stm.close();
             conn.close();
@@ -36,16 +35,10 @@ public class Register {
             System.out.println(e);
         }
 
-        if(b)
-        {
-            return true;
-        }
-        else {
-            return false;}
     }
-    public boolean userupdate(String phonenumber, String password){
+    public void userupdate(String phonenumber, String password){
 
-        boolean c = false;
+
 
         String sql = "select * from  where phonenumber='"+ phonenumber +"'";
 
@@ -61,7 +54,7 @@ public class Register {
                 sql = "update user set user.password= '"+password+"' WHERE dianshang.user.phonenumber='"+phonenumber+"'";
 
                 stm.execute(sql);
-                c = true;
+
             }
 
             rs.close();
@@ -72,12 +65,6 @@ public class Register {
             System.out.println(e);
         }
 
-        if(c)
-        {
-            return true;
-        }
-        else {
-            return false;}
-    }
+   }
 
 }
