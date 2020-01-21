@@ -33,6 +33,8 @@ public class ForgetPassword {
                 if(jedis.get("cc"+phonenumber)==code0) {
                     Register register  = new Register();
                     register.userupdate(phonenumber,password);
+                    jedis.set("p"+phonenumber,password);
+                    res.put("msg","密码已修改");
                 }
                 else{
                    // return验证码错误;

@@ -65,10 +65,11 @@ public class ServletRegister {
 
                 Register register = new Register();
                 register .userregister(phonenumber,password);
-
-
+                //保存已经注册的手机号
                 jedis.hset("phonenumber",phonenumber,"");
-
+                //保存已经注册的用户密码
+                jedis.set("p"+phonenumber,password);
+                res.put("msg","成功注册");
             }
             else{
                 //return "验证码错误";
