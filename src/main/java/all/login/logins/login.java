@@ -23,90 +23,66 @@ public class login {
         User user = JSON.toJavaObject(jsonObject,User.class );
 
         //前端登录界面传进json
-        //1、在redis中的hashmap查询k是否存在
+        //1、在redis中的hashmap查询k是否存在，且判断redis密码是否正确
         String str1=lookForInHashmap(user);
-        if(str1.equals("Login_OK")){
-            return str1;
-        }
-
-        //2、在redis中查询缓存是否存在
-        String str2=lookForInKV(user);
-        if(str2.equals("Login_OK")){
-            return str2;
-        }
-
-        //3、查询数据库
-        String str3=lookForInMysql(user);
-        if(str3.equals("Login_OK")){
-            return str3;
-        }else if(str3.equals("Login")){
-            //三步查询没有找到，数据库存在号码信息，但是密码出错，显示登录页面，重新登录；
-            return "Login";
-        }else {
-            //三步查询没有找到，并且数据库不存在号码信息，显示注册页面
-            return "Register";
-        }
-
-    }
-
-
-    //1、在redis中的hashmap查询k是否存在
-    public String lookForInHashmap(User user){
-        byte[] byt = jedis.get("hashmap".getBytes());
-        try{
-            Map<String, String> result = SerializeObjectTool.unserizlizeMap(byt);
-            int count=0;
-            if (result instanceof Map) {
-                for (Map.Entry<String, String> entry : result.entrySet()) {
-                    System.out.println("key= " + entry.getKey());
-                    System.out.println("value= " + entry.getValue());
-                    if(user.getPhoneNumber().equals(entry.getKey())){
-                        count=1;
-                        //在缓存hashmap中找到用户名密码==》登录到主页面
-                        return "Login_OK";
-                    }
+        switch (str1){
+            //用户名密码正确
+            case "Login_OK" : return "Login_OK";
+            //密码错误
+            case "Login":return "Login";
+            //3、redis没有找到记录，需要查询数据库
+            case "Login_False":
+                String str2=lookForInMysql(user);
+                switch (str2){
+                    //数据库查询账号密码正确
+                    case "Login_OK":return "Login_OK";
+                    //数据库查询密码错误
+                    case "Login":return "Login";
+                    //数据库没有查询到信息，显示注册
+                    case "Register":return "Register";
+                    default:return "Login";
                 }
-            }
-            if(count==0){
-                System.out.println("hashmap缓存中没有找到user.getphonrnumber");
-                return "Login_False";
-            }
-        }catch (NullPointerException e){
-            System.out.println("缓存中没有hashmap 空指针");
+
+
+
+            default:return "Login";
         }
-        return "Login_False";
+        
     }
 
-    //2、在redis中查询缓存是否存在
-    public String lookForInKV(User user){
-        byte[] byt1 = jedis.get(("p"+user.getPhoneNumber()).getBytes());
-        try {
-            Object obj = SerializeObjectTool.unserizlize(byt1);
-            String str = (String)obj;
-            if(str instanceof String){
-                System.out.println("key = "+user.getPhoneNumber());
-                System.out.println("value = "+str);
-                //在缓存中找到用户名密码==》登录到主页面
+    //1、在redis中的hashmap查询k是否存在，且判断redis密码是否正确
+    public String lookForInHashmap(User user){
+        if(jedis.hexists("phonenumber",user.getPhoneNumber())){
+            //2、查询redis密码是否正确
+            if(jedis.hget("phonenumber",user.getPhoneNumber()).equals(user.getPassword())){
+                //redis中用户名密码正确，登录成功
                 return "Login_OK";
+            }else {
+                //redis中密码不正确,则重新登录
+                return "Login";
             }
-        }catch (NullPointerException e){
-            System.out.println("缓存中没有找到user.getphonrnumber");
+        }else {
+            //hashmap中没有找到用户名记录，下一步查询数据库。
+            return "Login_False";
         }
-        return "Login_False";
     }
 
-    //3、查询数据库
+
+    //3、查询数据库，且判断数据库密码是否正确
     public String lookForInMysql(User user){
         LoginService loginService = new LoginService();
         User userMysql=loginService.selectUserByPhoneNumber(user.getPhoneNumber());
         if(userMysql!=null){
             if(userMysql.getPassword().equals(user.getPassword())){
+                //数据库用户名密码正确
                 return "Login_OK";
             }else {
+                //数据库查询密码错误
                 return "Login";
             }
         }else {
-            System.out.println("数据库中没有找到phonenumber，请先注册");
+            //System.out.println("数据库中没有找到phonenumber，请先注册");
+            //没有用户信息，需要注册
             return "Register";
         }
     }
