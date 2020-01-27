@@ -17,7 +17,9 @@ public class login {
         jedis = RedisUtil.getJedis();
         jedis.auth("123456");
     }
-    public String login(String data){
+
+
+    public String loginM(String data){
 
         JSONObject jsonObject = JSONObject.parseObject(data);
         User user = JSON.toJavaObject(jsonObject,User.class );
@@ -27,7 +29,10 @@ public class login {
         String str1=lookForInHashmap(user);
         switch (str1){
             //用户名密码正确
-            case "Login_OK" : return "Login_OK";
+            case "Login_OK" :
+                //把正确账号密码保存token
+                TokenProvider.saveTokenToRedis(user);
+                return "Login_OK";
             //密码错误
             case "Login":return "Login";
             //3、redis没有找到记录，需要查询数据库
@@ -35,19 +40,19 @@ public class login {
                 String str2=lookForInMysql(user);
                 switch (str2){
                     //数据库查询账号密码正确
-                    case "Login_OK":return "Login_OK";
+                    case "Login_OK":
+                        //把正确账号密码保存token
+                        TokenProvider.saveTokenToRedis(user);
+                        return "Login_OK";
                     //数据库查询密码错误
                     case "Login":return "Login";
                     //数据库没有查询到信息，显示注册
                     case "Register":return "Register";
                     default:return "Login";
                 }
-
-
-
             default:return "Login";
         }
-        
+
     }
 
     //1、在redis中的hashmap查询k是否存在，且判断redis密码是否正确

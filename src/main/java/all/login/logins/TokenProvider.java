@@ -1,49 +1,42 @@
 package all.login.logins;
 
-import all.login.Service.SerializeObjectTool;
+import all.login.Entity.User;
 import all.util.RedisUtil;
+import all.util.TokenUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import netscape.security.UserTarget;
 import redis.clients.jedis.Jedis;
 import java.util.UUID;
 
 public class TokenProvider {
-    private Jedis jedis ;
+    final private Jedis jedis ;
 
     public TokenProvider(){
         jedis = RedisUtil.getJedis();
-        //判断给定的密码是否匹配
         jedis.auth("123456");
+
     }
 
-    public String createToken(String json) {//String tokenInfo, Long expireTime
-        //token  45位
-        String token = System.currentTimeMillis() + UUID.randomUUID().toString().replace("-", "");
+    public String getToken(String data) {
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        User user = JSON.toJavaObject(jsonObject,User.class );
 
-        //把token存入redis
-        saveTokenToRedis(token,json);
-        return token;
-    }
-
-    public void saveTokenToRedis(String token,String json){
-        jedis.set(token, json, "NX", "EX", 259200);
-    }
-
-    //根据token从redis中查询用户json
-    public String getUserByToken(String token) {
-        String json=null;
-        try {
-            json = jedis.get(token);
-            System.out.println("token = "+token);
-            System.out.println("Login_json = "+json);
-        }catch (NullPointerException e){
-            //token已过期 或者没有token记录
-            System.out.println("缓存中没有找到token，需要重新登录");
-            //设置返回重新登录的json
-
-
+        //1、判断redis是否存在token
+        if(jedis.exists("token_"+user.getPhoneNumber())){
+            //redis存在token，直接登录成功，并且更新token时间为三天
+            jedis.set("token_"+user.getPhoneNumber(), TokenUtil.getToken(user.getPhoneNumber()), "NX", "EX", 259200);
+            return "Login_OK";
+        }else {
+            //不存在token，表示登录过期，则重新输入用户名密码
+            return "Login";
         }
-        //更新过期时间  三天
-        jedis.expire(token, 259200);
-        //返回用户信息
-        return json;
     }
+
+    public static void saveTokenToRedis(User user){
+        Jedis jedis1 = RedisUtil.getJedis();
+        jedis1.auth("123456");
+        jedis1.set("token_"+user.getPhoneNumber(), TokenUtil.getToken(user.getPhoneNumber()), "NX", "EX", 259200);
+    }
+
 }
