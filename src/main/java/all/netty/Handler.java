@@ -46,11 +46,14 @@ public class Handler extends ChannelInboundHandlerAdapter {
         // Token 身份验证 从http头中获取 在redis中存token 格式是 key: token_userid值 value: token值
         String token=fuHr.headers().get("token");
         String userid=fuHr.headers().get("userid");
+        String type=fuHr.headers().get("type");
         logger.info("userid:"+userid+",token:"+token);
         Jedis jedis=RedisUtil.getJedis();
-        String restoken=jedis.get("token_"+userid);
-        if (restoken==null||!restoken.equals(token)){
-            return "{\"message\":\"refuse\"}";
+        if (type.equals("t2")) {
+            String restoken = jedis.get("token_" + userid);
+            if (restoken == null || !restoken.equals(token)) {
+                return "{\"message\":\"refuse\"}";
+            }
         }
         String url = fuHr.uri();
         ByteBuf byteBuf = fuHr.content();
