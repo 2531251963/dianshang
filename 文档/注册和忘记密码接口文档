@@ -1,0 +1,42 @@
+1、url:/all/regjsteforget/ServletRegister/sendcode
+      请求数据
+      类型:text
+      phonenumber
+
+      返回类型json
+      {"msg":"账号已存在"} (当验证输入的手机号已经注册过时返回)
+      {"msg":"验证码已发送"} (当验证码成功发送时返回)
+
+2、url:/all/registeforget/ServletRegister/register
+      请求数据
+      类型:json
+     {
+      "phonenumber" : "17822002550",
+      "code":"12345",
+      "password":"123456"
+      }
+      返回类型json
+      {"'msg":"账号已注册"} (当验证输入的手机号 已经注册过时返回)
+      {"msg":"验证码错误"} (当验证码输入 错误时返回)
+      {"msg":"请发送验证码"}（当用户未点击发送验证码时返回）
+3、url:/all/regjsteforget/ForgetPassword/sendcode
+      请求数据
+      类型:text
+      phonenumber
+
+      返回类型json
+      {"msg":"验证码已发送"} (当验证码成功发送时返回)
+      {"msg":"账号不存在,请确认账号是否输入正确"}(当用户输入的账号不存在或输入错误时返回)
+4、url:/all/regjsteforget/ForgetPassword/forget
+      请求数据
+      类型:json
+     {
+      "phonenumber" : "17822002550",
+      "code":"12345",
+      "password":"123456"
+      }
+      返回类型json
+      {"'msg":"密码修改成功"}（当验证码输入正确时返回）
+      {"msg":"验证码错误"} (当验证码输入 错误时返回)
+      {"msg":"请发送验证码"}（当用户未点击发送验证码时返回）
+      {"msg":"账号不存在,请确认账号是否输入正确"} (当用户输入的账号有误时返回)
