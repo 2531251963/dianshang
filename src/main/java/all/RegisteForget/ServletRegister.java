@@ -75,9 +75,9 @@ public class ServletRegister {
                 res.put("msg", "请发送验证码");
             }
         }
-//        return JSON.toJSONString(res);
+        return JSON.toJSONString(res);
 
-        return phonenumber;
+
     }
 
 
