@@ -1,0 +1,46 @@
+url:/all/login/logins/Login/loginM
+请求数据：
+类型:json
+{
+    "phoneNumber":"12345678912"
+    "password":"12345678912"
+}
+1、"phoneNumber"：用户名
+2、"password"：密码
+返回数据：
+类型：json
+{
+    "phoneNumber":"12345678912"
+    "password":"12345678912"
+    "token":"xxx"
+    "msg":"xxx"
+}
+1、token携带免密登录信息
+2、"msg":具体信息
+        Success_Login_With_PhonenumberAndPassword：用户名密码输入正确，登录成功
+        Fail_Login_With_WrongPassword：密码输入错误，请重新输入密码
+        Not_Register：没有注册信息，需要新注册才可使用
+        Login_Again：无法识别的错误，重新输入用户名密码
+
+
+--------------------------------------------------------------------------------------
+url:/all/login/logins/Token/getToken
+请求数据：
+类型：json
+{
+    "phoneNumber":"12345678912"
+    "password":"12345678912"
+    "token":"xxx"
+    "msg":"xxx"
+}
+返回数据：
+类型：json
+{
+    "phoneNumber":"12345678912"
+    "token":"xxx"
+    "msg":"xxx"
+}
+1、token 免密登录成功一次，更新一次
+2、"msg"具体信息：
+        Success_Login_Without_PhonenumberAndPassword：免密登录成功
+        Fail_Login_Without_PhonenumberAndPassword：免密失败，需要重新输入用户名密码
