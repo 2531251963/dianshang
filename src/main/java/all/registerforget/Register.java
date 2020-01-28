@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class Register {
 
-    public void userregister(String phonenumber, String password){
+    public void userregister(Long userid,String phonenumber, String password){
 
 
         //查看要添加的手机号是否存在
@@ -23,7 +23,7 @@ public class Register {
             //若手机号不存在
             if(!rs.next()){
                 //添加用户信息
-                sql = "insert into user(userid,phoneNumber,password) values('"+ SnowFlakeUtil.getId() +"','"+phonenumber+"','"+password+"')";
+                sql = "insert into user(userid,phoneNumber,password) values('"+ userid +"','"+phonenumber+"','"+password+"')";
                 stm.execute(sql);
 
             }

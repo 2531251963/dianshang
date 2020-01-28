@@ -3,6 +3,7 @@ package all.registerforget;
 
 import all.util.SendCodeUtil;
 import all.util.RedisUtil;
+import all.util.SnowFlakeUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import redis.clients.jedis.Jedis;
@@ -49,6 +50,7 @@ public class ServletRegister {
     public String register(String data) {
         Map<String, String> res = new HashMap<String, String>();
         JSONObject map = JSON.parseObject(data);
+        Long userid;
 
         String phonenumber = map.getString("phonenumber");
         String code0 = map.getString("code");
@@ -63,8 +65,12 @@ public class ServletRegister {
             //先验证验证码是否发送
             if (jedis.exists("c" + phonenumber)) {
                 if (jedis.get("c" + phonenumber).equals(code0)) {
+                    userid = SnowFlakeUtil.getId();
                     Register register = new Register();
-                    register.userregister(phonenumber, password);
+                    register.userregister(userid,phonenumber, password);
+
+                    jedis.hset("phonenumber",phonenumber, String.valueOf(userid));
+
                     res.put("msg","注册成功");
                 } else {
                     //return "验证码错误";
