@@ -1,5 +1,4 @@
-
-
+功能简介: xxx功能
 url: /包名/二级包名/三级包名/类名/函数名            例如     /all/registeforget/ServletRegister/sendcode
 请求数据
 类型:json/text
