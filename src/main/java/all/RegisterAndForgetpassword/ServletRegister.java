@@ -12,7 +12,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * @author zhao wen bo
+ */
 public class ServletRegister {
+
+
     public String sendcode(String phonenumber) {
 
         Map<String, String> map = new HashMap<String, String>();
