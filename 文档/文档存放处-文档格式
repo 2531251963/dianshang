@@ -1,0 +1,41 @@
+
+
+url: /包名/二级包名/三级包名/类名/函数名            例如     /all/registeforget/ServletRegister/sendcode
+请求数据
+类型:json/text
+{
+
+}
+
+/
+
+15510828597
+
+返回数据 每个属性都要有解释 (重复属性就不用了)
+
+1: 返回类型 json/text
+
+{
+"msg":"xxxx"
+
+}
+
+msg属性解释      msg是具体信息
+
+2: json
+
+{
+
+
+
+}
+
+
+3: text
+
+ok
+
+
+
+
+
