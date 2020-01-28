@@ -29,7 +29,6 @@ url:/all/login/logins/Token/getToken
 类型：json
 {
     "phoneNumber":"12345678912"
-    "password":"12345678912"
     "token":"xxx"
     "msg":"xxx"
 }
