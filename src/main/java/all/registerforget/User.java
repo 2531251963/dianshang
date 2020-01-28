@@ -1,4 +1,4 @@
-package all.RegisteForget;
+package all.registerforget;
 
 public class User {
     private int userid;

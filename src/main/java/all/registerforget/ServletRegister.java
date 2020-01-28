@@ -1,4 +1,4 @@
-package all.RegisteForget;
+package all.registerforget;
 
 
 import all.util.SendCodeUtil;
@@ -25,7 +25,7 @@ public class ServletRegister {
 
         if (jedis.hexists("phonenumber", phonenumber)) {
             //return "账号已存在";
-            map.put("msg", "账号已存在");
+            map.put("msg", "账号已注册");
         } else {
 
             if (jedis.exists("c" + phonenumber)) {
@@ -58,7 +58,7 @@ public class ServletRegister {
         Jedis jedis = RedisUtil.getJedis();
         if (jedis.hexists("phonenumber", phonenumber)) {
             //return "账号已存在";
-            res.put("msg", "账号已存在");
+            res.put("msg", "账号已注册");
         } else {
             //先验证验证码是否发送
             if (jedis.exists("c" + phonenumber)) {
