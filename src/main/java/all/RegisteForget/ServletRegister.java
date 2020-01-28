@@ -41,8 +41,8 @@ public class ServletRegister {
 
     /**
      * @param data {
-     *             "phonenumber":"11111111",
-     *             "code":"123234",
+     *             "phonenumber":"17822002550",
+     *             "code":"12345",
      *             "password":"123456"
      *             }
      */
@@ -75,9 +75,9 @@ public class ServletRegister {
                 res.put("msg", "请发送验证码");
             }
         }
-//        return JSON.toJSONString(res);
+        return JSON.toJSONString(res);
 
-        return phonenumber;
+
     }
 
 

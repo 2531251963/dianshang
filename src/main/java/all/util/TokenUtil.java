@@ -8,7 +8,6 @@ package all.util;
  * @Version 1.0
  */
 public class TokenUtil {
-
     public static String getToken(String userid){
         return userid+System.currentTimeMillis();
     }
