@@ -1,6 +1,5 @@
-package all.RegisteForget;
+package all.registerforget;
 
-import all.RegisteForget.Register;
 import all.util.RedisUtil;
 import all.util.SendCodeUtil;
 import com.alibaba.fastjson.JSON;
