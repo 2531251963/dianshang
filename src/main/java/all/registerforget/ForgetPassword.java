@@ -20,16 +20,17 @@ public class ForgetPassword {
         Jedis jedis = RedisUtil.getJedis();
 
         if (jedis.hexists("phonenumber", phonenumber)) {
-            //return "账号已存在";英文
-            map.put("msg", "账号已存在");
-        } else {
-
             if (jedis.exists("cc" + phonenumber)) {
 
                 map.put("msg", "验证码已发送");
             } else {
                 jedis.setex("cc" + phonenumber, 60, SendCodeUtil.sendCode(phonenumber));
             }
+
+        } else {
+             //return "账号已注册"
+            map.put("msg", "账号不存在，请确认账号是否输入正确");
+
         }
         return JSON.toJSONString(map);
 
