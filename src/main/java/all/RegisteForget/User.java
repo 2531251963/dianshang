@@ -1,4 +1,4 @@
-package all.RegisterAndForgetpassword;
+package all.RegisteForget;
 
 public class User {
     private int userid;

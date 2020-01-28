@@ -1,4 +1,4 @@
-package all.RegisterAndForgetpassword;
+package all.RegisteForget;
 
 import all.util.JdbcUtil;
 import all.util.SnowFlakeUtil;
