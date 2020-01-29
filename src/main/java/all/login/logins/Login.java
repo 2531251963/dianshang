@@ -15,7 +15,7 @@ public class Login {
 
     public Login(){
         jedis = RedisUtil.getJedis();
-        jedis.auth("123456");
+        //jedis.auth("123456");
         userid="userid";
         token="token";
     }
@@ -26,6 +26,8 @@ public class Login {
         JSONObject json = new JSONObject();
         JSONObject jsonObject = JSONObject.parseObject(data);
         User user = JSON.toJavaObject(jsonObject,User.class );
+        //字符替换
+        //user.setPhoneNumber(user.getPhoneNumber());
 
         //前端登录界面传进json
         //1、在redis中的hashmap查询phoneNumber是否存在，找到对应userid，且判断redis密码是否正确
@@ -40,7 +42,7 @@ public class Login {
             //4、用户名密码正确
             case 1:
                 //把正确账号密码保存token
-                token = Token.saveTokenToRedis(user);
+                token = Token.saveTokenToRedis(jedis,user);
                 json.put("userid",userid);
                 json.put("token", token);
                 json.put("msg", "Success_Login");
@@ -59,7 +61,7 @@ public class Login {
                     //7、数据库查询账号密码正确
                     case 11:
                         //把正确账号密码保存token
-                        token = Token.saveTokenToRedis(user);
+                        token = Token.saveTokenToRedis(jedis,user);
                         //把正确账号密码保存redis
                         saveRecordToRedis(user);
                         json.put("userid",userid);
@@ -98,6 +100,8 @@ public class Login {
 
     //1、在redis中的hashmap查询k是否存在，且判断redis密码是否正确
     public int lookForInHashmap(User user){
+
+
         //2、该用户有注册信息
         if(jedis.hexists("phonenumber",user.getPhoneNumber())){
             //在hashmap中找到userid
@@ -128,7 +132,7 @@ public class Login {
     //6、查询数据库，且判断数据库密码是否正确
     public int lookForInMysql(User user){
         LoginService loginService = new LoginService();
-        User userMysql=loginService.selectUserByPhoneNumber(user.getPhoneNumber());
+        User userMysql=loginService.selectUserByPhoneNumber(userid);
         //数据库中存在注册信息
         if(userMysql!=null){
             if(userMysql.getPassword().equals(user.getPassword())){

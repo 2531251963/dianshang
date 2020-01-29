@@ -14,7 +14,7 @@ public class Token {
 
     public Token(){
         jedis = RedisUtil.getJedis();
-        jedis.auth("123456");
+        //jedis.auth("123456");
         token="token";
 
     }
@@ -53,11 +53,10 @@ public class Token {
         }
     }
 
-    public static String saveTokenToRedis(User user){
-        Jedis jedis1 = RedisUtil.getJedis();
-        jedis1.auth("123456");
+    public static String saveTokenToRedis(Jedis jedis,User user){
+        //jedis1.auth("123456");
         String tokenstr=TokenUtil.getToken(user.getPhoneNumber());
-        jedis1.set("token_"+user.getPhoneNumber(), tokenstr, "NX", "EX", 259200);
+        jedis.set("token_"+user.getPhoneNumber(), tokenstr, "NX", "EX", 259200);
         return tokenstr;
     }
 
