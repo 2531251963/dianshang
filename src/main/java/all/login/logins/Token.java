@@ -10,10 +10,12 @@ import redis.clients.jedis.Jedis;
 
 public class Token {
     final private Jedis jedis ;
+    private String token;
 
     public Token(){
         jedis = RedisUtil.getJedis();
         jedis.auth("123456");
+        token="token";
 
     }
 
@@ -24,21 +26,21 @@ public class Token {
         TokenE tokenE = JSON.toJavaObject(jsonObject,TokenE.class );
 
         //1、判断redis是否存在token
-        if(jedis.exists("token_"+tokenE.getPhoneNumber())){
+        if(jedis.exists("token_"+tokenE.getUserid())){
             //比较redis的token与传入token的值是否相同
-            if(jedis.get("token_"+tokenE.getPhoneNumber()).equals(tokenE.getToken())){
+            if(jedis.get("token_"+tokenE.getUserid()).equals(tokenE.getToken())){
                 //redis存在token，比对成功后，免密成功，并且更新token时间为三天
-                String tokenstr=TokenUtil.getToken(tokenE.getPhoneNumber());
-                jedis.set("token_"+tokenE.getPhoneNumber(), tokenstr, "NX", "EX", 259200);
-                json.put("token",tokenstr);
-                json.put("phoneNumber",tokenE.getPhoneNumber());
-                json.put("password",tokenE.getPassword());
-                json.put("msg","Success_Login_Without_PhonenumberAndPassword");
+                token=TokenUtil.getToken(tokenE.getUserid());
+                jedis.set("token_"+tokenE.getUserid(), token, "NX", "EX", 259200);
+                json.put("userid",tokenE.getUserid());
+                json.put("token",token);
+                json.put("msg","Success_Login");
                 return json.toString();
             }else {
                 //redis存在token，比对失败后，免密失败，返回重新进入登录界面
+                json.put("userid",tokenE.getUserid());
                 json.put("token",tokenE.getToken());
-                json.put("msg","Fail_Login_Without_PhonenumberAndPassword");
+                json.put("msg","Fail_Login");
                 return json.toString();
             }
 
@@ -58,5 +60,6 @@ public class Token {
         jedis1.set("token_"+user.getPhoneNumber(), tokenstr, "NX", "EX", 259200);
         return tokenstr;
     }
+
 
 }
