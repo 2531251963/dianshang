@@ -35,7 +35,7 @@ public class LoginDao {
         }
         try {
             if(rs.next()){
-                user.setId(rs.getInt("userid"));
+                user.setUserid(rs.getInt("userid"));
                 user.setPhoneNumber(rs.getString("phonenumber"));
                 user.setPassword(rs.getString("password"));
                 return user;

@@ -11,6 +11,7 @@ import redis.clients.jedis.Jedis;
 public class Token {
     final private Jedis jedis ;
     private String token;
+    private String userid="userid";
 
     public Token(){
         jedis = RedisUtil.getJedis();
@@ -30,6 +31,10 @@ public class Token {
             //比较redis的token与传入token的值是否相同
             if(jedis.get("token_"+tokenE.getUserid()).equals(tokenE.getToken())){
                 //redis存在token，比对成功后，免密成功，并且更新token时间为三天
+                boolean keyExist = jedis.exists("token_"+tokenE.getUserid());
+                if (keyExist) {
+                    jedis.del("token_"+tokenE.getUserid());
+                }
                 token=TokenUtil.getToken(tokenE.getUserid());
                 jedis.set("token_"+tokenE.getUserid(), token, "NX", "EX", 259200);
                 json.put("userid",tokenE.getUserid());
@@ -48,17 +53,20 @@ public class Token {
         }else {
             //不存在token，表示登录过期，则重新输入用户名密码
             json.put("token",tokenE.getToken());
-            json.put("msg","Fail_Login_Without_PhonenumberAndPassword");
+            json.put("msg","Fail_Login");
+            json.put("userid",userid);
             return json.toString();
         }
     }
 
-    public static String saveTokenToRedis(Jedis jedis,User user){
+    public static String saveTokenToRedis(Jedis jedis,String userid){
         //jedis1.auth("123456");
-        String tokenstr=TokenUtil.getToken(user.getPhoneNumber());
-        jedis.set("token_"+user.getPhoneNumber(), tokenstr, "NX", "EX", 259200);
+        boolean keyExist = jedis.exists("token_"+userid);
+        if (keyExist) {
+            jedis.del("token_"+userid);
+        }
+        String tokenstr=TokenUtil.getToken(userid);
+        jedis.set("token_"+userid, tokenstr, "NX", "EX", 259200);
         return tokenstr;
     }
-
-
 }

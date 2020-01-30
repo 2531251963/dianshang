@@ -3,7 +3,7 @@ package all.login.entity;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private long userid;
+    private int userid;
     private String phoneNumber;
     private String password;
 
@@ -15,11 +15,11 @@ public class User implements Serializable {
     public User() {
     }
 
-    public void setId(long id) {
+    public void setUserid(int id) {
         this.userid = id;
     }
 
-    public long getId() {
+    public int getUserid() {
         return userid;
     }
 

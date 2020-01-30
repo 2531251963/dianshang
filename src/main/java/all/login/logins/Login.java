@@ -42,7 +42,7 @@ public class Login {
             //4、用户名密码正确
             case 1:
                 //把正确账号密码保存token
-                token = Token.saveTokenToRedis(jedis,user);
+                token = Token.saveTokenToRedis(jedis,userid);
                 json.put("userid",userid);
                 json.put("token", token);
                 json.put("msg", "Success_Login");
@@ -61,7 +61,7 @@ public class Login {
                     //7、数据库查询账号密码正确
                     case 11:
                         //把正确账号密码保存token
-                        token = Token.saveTokenToRedis(jedis,user);
+                        token = Token.saveTokenToRedis(jedis,userid);
                         //把正确账号密码保存redis
                         saveRecordToRedis(user);
                         json.put("userid",userid);
@@ -106,6 +106,7 @@ public class Login {
         if(jedis.hexists("phonenumber",user.getPhoneNumber())){
             //在hashmap中找到userid
             userid=jedis.hget("phonenumber",user.getPhoneNumber());
+            user.setUserid(Integer.parseInt(userid));
             //查询redis是否存在账号密码
             if(jedis.exists("p"+user.getPhoneNumber())){
                 //4、redis存在账号密码，且密码正确,登录成功
