@@ -1,5 +1,5 @@
 1、功能简介:注册时发送验证码
-url:/all/regjsteforget/ServletRegister/sendcode
+url:/all/registerforget/ServletRegister/sendcode
       请求数据
       类型:text
       phonenumber
@@ -7,8 +7,9 @@ url:/all/regjsteforget/ServletRegister/sendcode
       返回类型json
       {"msg":"账号已存在"} (当验证输入的手机号已经注册过时返回)
       {"msg":"验证码已发送"} (当验证码成功发送时返回)
+
 2、功能简介:注册账号验证
-url:/all/registeforget/ServletRegister/register
+url:/all/registerforget/ServletRegister/register
       请求数据
       类型:json
      {
@@ -18,10 +19,12 @@ url:/all/registeforget/ServletRegister/register
       }
       返回类型json
       {"'msg":"账号已注册"} (当验证输入的手机号 已经注册过时返回)
+      {"msg","注册成功"}(注册成功时返回)
       {"msg":"验证码错误"} (当验证码输入 错误时返回)
       {"msg":"请发送验证码"}（当用户未点击发送验证码时返回）
+
 3、功能简介:忘记密码时发送验证码
-url:/all/regjsteforget/ForgetPassword/sendcode
+url:/all/registerforget/ForgetPassword/sendcode
       请求数据
       类型:text
       phonenumber
@@ -31,7 +34,7 @@ url:/all/regjsteforget/ForgetPassword/sendcode
       {"msg":"账号不存在,请确认账号是否输入正确"}(当用户输入的账号不存在或输入错误时返回)
 
 4、功能简介:忘记密码验证
-url:/all/regjsteforget/ForgetPassword/forget
+url:/all/registerforget/ForgetPassword/forget
       请求数据
       类型:json
      {
