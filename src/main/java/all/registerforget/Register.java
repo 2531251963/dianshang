@@ -14,20 +14,20 @@ public class Register {
 
         //查看要添加的手机号是否存在
 //        String sql = "select * from  where phonenumber='"+ phonenumber +"'";
-
+        String sql="select userid,phonenumber,password from user where phonenumber ='"+phonenumber+"'";
 
         try{
             Connection conn = JdbcUtil.getConnection();
             Statement stm = conn.createStatement();
-//            ResultSet rs = stm.executeQuery(sql);
-            //若手机号不存在
-//            if(!rs.next()){
+            ResultSet rs = stm.executeQuery(sql);
+//            若手机号不存在
+            if(!rs.next()){
                 //添加用户信息
-                String sql = "insert into user(userid,phoneNumber,password) values('"+ userid +"','"+phonenumber+"','"+password+"')";
+                sql = "insert into user(userid,phoneNumber,password) values('"+ userid +"','"+phonenumber+"','"+password+"')";
                 stm.execute(sql);
 
-//            }
-//            rs.close();
+            }
+            rs.close();
             stm.close();
             conn.close();
         }catch (Exception e) {
@@ -40,24 +40,24 @@ public class Register {
 
 
 
-//        String sql = "select * from  where phonenumber='"+ phonenumber +"'";
+        String sql="select userid,phonenumber,password from user where phonenumber ='"+phonenumber+"'";
 
 
         try{
 
             Connection conn = JdbcUtil.getConnection();
             Statement stm = conn.createStatement();
-//            ResultSet rs = stm.executeQuery(sql);
+            ResultSet rs = stm.executeQuery(sql);
 
-//            if(rs.next()){
+            if(rs.next()){
 
-                String sql = "update user set user.password= '"+password+"' WHERE dianshang.user.phonenumber='"+phonenumber+"'";
+                 sql = "update user set user.password= '"+password+"' WHERE dianshang.user.phonenumber='"+phonenumber+"'";
 
                 stm.execute(sql);
 
-//            }
+            }
 
-//            rs.close();
+            rs.close();
             stm.close();
             conn.close();
         }catch (Exception e) {
