@@ -1,0 +1,45 @@
+1.增加
+  url:/all/ls/mongo/insert
+  请求数据
+  _id （当前时间+用户id）
+  goodsname
+  goodsprice
+  goodsnumber
+  goodsid
+  goodsimgurl
+  userid
+
+  返回数据
+  {"msg", "添加成功"}
+2.删除
+   url:/all/ls/mongo/deleteone
+   请求数据
+   _id （当前时间+用户id）
+
+   返回数据
+  {"msg", "删除成功"}
+3.批量删除(批量结算)
+   url:/all/ls/mongo/deletemany
+   请求数据
+   list：["1111","222"，.....]
+   返回数据
+   {"msg", "结算删除"}
+4.修改
+   url:/all/ls/mongo/deletemany 
+   请求数据
+   _id （当前时间+用户id）  
+   goodsnumber
+   goodsprice
+   返回数据
+   {"msg", "更新成功"}
+5.查找
+   url:/all/ls/mongo/select	
+   请求数据
+   userid
+   page（从0开始）
+   返回数据（4条数据 时间排序）
+   goodsname
+   goodsprice
+   goodsnumber
+   goodsid
+   goodsimgurl
