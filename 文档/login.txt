@@ -22,6 +22,8 @@ url:/all/login/logins/Login/loginM
         WrongPassword：密码输入错误，请重新输入密码
         Not_Register：没有注册信息，需要新注册才可使用
         Wrong_Login：不可使用的账号，账号本身存在问题，该用户存在攻击性
+        Attack!:该用户行为存在攻击性，试图盗取数据库信息
+        Lack_Info:用户未填写账号或密码
 3、"userid"：具体信息
         userid：没有对应userid，默认值，无意义
 
@@ -46,3 +48,4 @@ url:/all/login/logins/Token/getToken
 2、"msg"具体信息：
         Success_Login：免密登录成功
         Fail_Login：免密失败，需要重新输入用户名密码
+        Attack!:该用户行为存在攻击性，试图盗取数据库信息

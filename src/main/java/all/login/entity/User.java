@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     private int userid;
-    private String phoneNumber;
-    private String password;
+    private String phoneNumber="phoneNumber";
+    private String password="password";
 
     public User(String phoneNumber, String password) {
         this.phoneNumber = phoneNumber;

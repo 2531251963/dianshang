@@ -2,10 +2,10 @@ package all.login.entity;
 
 public class TokenE {
     //token
-    private String userid;
-    private String token;
+    private String userid="userid";
+    private String token="token";
     //提示信息
-    private String msg;
+    private String msg="msg";
 
     public TokenE() {
     }
