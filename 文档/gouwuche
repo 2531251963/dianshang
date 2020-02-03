@@ -1,7 +1,6 @@
 1.增加
   url:/all/ls/mongo/insert
   请求数据
-  _id （当前时间+用户id）
   goodsname
   goodsprice
   goodsnumber
@@ -20,7 +19,7 @@
   {"msg", "删除成功"}
 3.批量删除(批量结算)
    url:/all/ls/mongo/deletemany
-   请求数据
+   请求数据 list["_id","_id"]
    list：["1111","222"，.....]
    返回数据
    {"msg", "结算删除"}
@@ -37,7 +36,8 @@
    请求数据
    userid
    page（从0开始）
-   返回数据（4条数据 时间排序）
+   返回数据（8条数据 时间排序 如果没有更多数据 则返回 {"msg,没有数据"}）
+   _id
    goodsname
    goodsprice
    goodsnumber
