@@ -113,7 +113,7 @@ public class Login {
     }
 
     //1、在redis中的hashmap查询k是否存在，且判断redis密码是否正确
-    public int lookForInHashmap(User user){
+    private int lookForInHashmap(User user){
 
 
         //2、该用户有注册信息
@@ -145,7 +145,7 @@ public class Login {
     }
 
     //6、查询数据库，且判断数据库密码是否正确
-    public int lookForInMysql(User user){
+    private int lookForInMysql(User user){
         LoginService loginService = new LoginService();
         User userMysql=loginService.selectUserByPhoneNumber(userid);
         //数据库中存在注册信息
