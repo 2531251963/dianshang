@@ -26,8 +26,9 @@ public class Token {
         TokenE tokenE=null;
         //data包含token
         try{
-            JSONObject jsonObject = JSONObject.parseObject(data);
-            tokenE = JSON.toJavaObject(jsonObject,TokenE.class );
+            JSONObject map = JSON.parseObject(data);
+            String tokenn=map.getString("token");
+            tokenE.setToken(tokenn);
         }catch (JSONException e){
             json.put("msg","Attack!");
             return json.toString();

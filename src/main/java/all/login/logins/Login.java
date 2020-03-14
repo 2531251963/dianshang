@@ -27,8 +27,12 @@ public class Login {
         JSONObject json = new JSONObject();
         User user=null;
         try{
-            JSONObject jsonObject = JSONObject.parseObject(data);
-            user = JSON.toJavaObject(jsonObject,User.class );
+            JSONObject map = JSON.parseObject(data);
+            String password=map.getString("password");
+            String phoneNumber=map.getString("phoneNumber");
+
+            user.setPhoneNumber(phoneNumber);
+            user.setPassword(password);
         }catch (JSONException e){
             json.put("msg","Attack!");
             return json.toString();
