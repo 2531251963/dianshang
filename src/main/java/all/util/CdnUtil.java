@@ -13,8 +13,8 @@ import java.io.File;
  */
 public class CdnUtil {
     private static final String endpoint = "http://oss-cn-beijing.aliyuncs.com";
-    private static final String accessKeyId = "LTAIBHBFbhKxDBTU";
-    private static final  String accessKeySecret = "gibydtl1h2tUHxAr6FFq45cZMyf3ob";
+    private static final String accessKeyId = "";
+    private static final  String accessKeySecret = "";
     private static final String bucketName="liyihe";
     private static final String fileFolderName="dianshang/";
     /**
