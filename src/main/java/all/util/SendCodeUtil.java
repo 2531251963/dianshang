@@ -18,8 +18,8 @@ import java.util.Random;
  */
 public class SendCodeUtil {
     private static final String regionId = "cn-hangzhou";
-    private static final String accessKeyId = "LTAIBHBFbhKxDBTU";
-    private static final String secret = "gibydtl1h2tUHxAr6FFq45cZMyf3ob";
+    private static final String accessKeyId = "";
+    private static final String secret = "";
     private static final DefaultProfile profile = DefaultProfile.getProfile(regionId, accessKeyId, secret);
     private static final String domain = "dysmsapi.aliyuncs.com";
     private static final String action = "SendSms";
